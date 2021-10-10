@@ -2,12 +2,7 @@ from setuptools import setup
 from feature_encoders import __version__
 
 
-def readme():
-    with open("README.rst", encoding='utf-8') as readme_file:
-        return readme_file.read()
-
-
-def get_extras_require():
+def ci_extras_require():
     extras = [
         "flake8 >= 3.9.2",
         "flake8-docstrings >= 1.6.0",
@@ -15,6 +10,19 @@ def get_extras_require():
         "pytest >= 6.2.5",
     ]
     return extras
+
+
+def docs_extras_require():
+    extras = [
+        'Sphinx >= 3.0.0',  # Force RTD to use >= 3.0.0
+        'docutils',
+        "nbsphinx==0.8.7",
+        "numpydoc==1.1.0",
+        'pylons-sphinx-themes >= 1.0.8',  # Ethical Ads
+        "pydata-sphinx-theme==0.7.1",
+    ]
+    return extras
+
 
 # get the dependencies and installs
 with open("requirements.txt", "r", encoding="utf-8") as f:
@@ -25,20 +33,6 @@ with open("requirements.txt", "r", encoding="utf-8") as f:
             requires.append(req)
 
 
-docs_extras = [
-    'Sphinx >= 3.0.0',  # Force RTD to use >= 3.0.0
-    'docutils',
-    "nbsphinx==0.8.7",
-    "numpydoc==1.1.0",
-    'pylons-sphinx-themes >= 1.0.8',  # Ethical Ads
-    'pylons_sphinx_latesturl',
-    "pydata-sphinx-theme==0.7.1",
-    'repoze.sphinx.autointerface',
-    'sphinxcontrib-autoprogram',
-    "sphinx-autodoc-typehints==1.11.1",
-]
-
-
 configuration = {
     "name": "feature_encoders",
     "version": __version__,
@@ -47,8 +41,6 @@ configuration = {
         "A library for encoding features and their "
         "pairwise interactions."
     ),
-    "long_description_content_type": "text/x-rst",
-    "long_description": readme(),
     "classifiers": [
         "Development Status :: 3 - Alpha",
         "Intended Audience :: Science/Research",
@@ -74,7 +66,7 @@ configuration = {
     "cmdclass": {},
     "tests_require": ["pytest"],
     "data_files": (),
-    "extras_require": {"ci": get_extras_require(), "docs": docs_extras},
+    "extras_require": {"ci": ci_extras_require(), "docs": docs_extras_require()},
 }
 
 setup(**configuration)
