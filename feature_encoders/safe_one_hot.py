@@ -34,6 +34,13 @@ class SafeOneHotEncoder(TransformerMixin, BaseEstimator):
             to be distinct from the values used to encode any of the categories in `fit`.
             If None, the value `-1` is used. During `transform`, unknown categories will
             be replaced using the most frequent value along each column, by default None
+
+        Attributes
+        ----------
+        n_features_out_ : int
+            The total number of output features.
+        feature_pipeline_ : sklearn.pipeline.Pipeline
+            The pipeline that performs the transformation.
         """
         self.feature = feature
         self.unknown_value = unknown_value
@@ -58,7 +65,7 @@ class SafeOneHotEncoder(TransformerMixin, BaseEstimator):
         Raises
         ------
         ValueError
-            If the input data do not pass the checks of `eensight.utils.check_X`.
+            If the input data do not pass the checks of `utils.check_X`.
         ValueError
             If the encoder is applied on numerical (float) data.
         """
@@ -109,7 +116,7 @@ class SafeOneHotEncoder(TransformerMixin, BaseEstimator):
         Raises
         ------
         ValueError
-            If the input data do not pass the checks of `eensight.utils.check_X`.
+            If the input data do not pass the checks of `utils.check_X`.
         """
         check_is_fitted(self, "fitted_")
         X = check_X(X, exists=self.features_)

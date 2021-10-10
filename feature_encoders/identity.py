@@ -31,6 +31,11 @@ class IdentityEncoder(TransformerMixin, BaseEstimator):
         ------
         ValueError
             If `as_filter` is True, `feature` cannot include multiple feature names.
+
+        Attributes
+        ----------
+        n_features_out_ : int
+            The total number of output features.
         """
         if as_filter and isinstance(feature, list):
             raise ValueError(
@@ -61,7 +66,7 @@ class IdentityEncoder(TransformerMixin, BaseEstimator):
         Raises
         ------
         ValueError
-            If the input data do not pass the checks of `eensight.utils.check_X`.
+            If the input data do not pass the checks of `utils.check_X`.
         """
         X = check_X(X)
 
@@ -92,7 +97,7 @@ class IdentityEncoder(TransformerMixin, BaseEstimator):
         Raises
         ------
         ValueError
-            If the input data do not pass the checks of `eensight.utils.check_X`.
+            If the input data do not pass the checks of `utils.check_X`.
         ValueError
             If `include_bias` is True and a column with constant values already
             exists in the returned columns.

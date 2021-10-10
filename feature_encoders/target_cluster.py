@@ -84,6 +84,13 @@ class TargetClusterEncoder(TransformerMixin, BaseEstimator):
             Controls the randomness of the estimator. To obtain a deterministic behaviour during
             fitting, ``random_state`` has to be fixed to an integer, by default None
 
+        Attributes
+        ----------
+        n_features_out_ : int
+            The total number of output features.
+        mapping_ : dict
+            The mapping between the original categories and their clusters.
+
         Notes
         -----
         This encoder does not replace unknown values with the most frequent one during `transform`.
@@ -118,7 +125,7 @@ class TargetClusterEncoder(TransformerMixin, BaseEstimator):
         Raises
         ------
         ValueError
-            If the input data do not pass the checks of `eensight.utils.check_X`.
+            If the input data do not pass the checks of `utils.check_X`.
         ValueError
             If the encoder is applied on numerical (float) data.
         ValueError
@@ -254,7 +261,7 @@ class TargetClusterEncoder(TransformerMixin, BaseEstimator):
         Raises
         ------
         ValueError
-            If the input data do not pass the checks of `eensight.utils.check_X`.
+            If the input data do not pass the checks of `utils.check_X`.
         """
         check_is_fitted(self, "fitted_")
         X = check_X(X, exists=self.feature)

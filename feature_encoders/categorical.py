@@ -78,6 +78,13 @@ class CategoricalEncoder(TransformerMixin, BaseEstimator):
             ordinal
                 Encode the transformed result as integer values.
             by default "onehot".
+
+        Attributes
+        ----------
+        n_features_out_ : int
+            The total number of output features.
+        feature_pipeline_ : sklearn.pipeline.Pipeline
+            The pipeline that performs the transformation.
         """
         self.feature = feature
         self.max_n_categories = max_n_categories
@@ -109,7 +116,7 @@ class CategoricalEncoder(TransformerMixin, BaseEstimator):
             Returns the fitted instance itself.
 
         ValueError
-            If the input data do not pass the checks of `eensight.utils.check_X`.
+            If the input data do not pass the checks of `utils.check_X`.
         ValueError
             If the encoder is applied on numerical (float) data.
         ValueError
@@ -210,7 +217,7 @@ class CategoricalEncoder(TransformerMixin, BaseEstimator):
         Raises
         ------
         ValueError
-            If the input data do not pass the checks of `eensight.utils.check_X`.
+            If the input data do not pass the checks of `utils.check_X`.
         """
         check_is_fitted(self, "fitted_")
         X = check_X(X, exists=self.feature)
