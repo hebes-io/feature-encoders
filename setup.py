@@ -25,6 +25,20 @@ with open("requirements.txt", "r", encoding="utf-8") as f:
             requires.append(req)
 
 
+docs_extras = [
+    'Sphinx >= 3.0.0',  # Force RTD to use >= 3.0.0
+    'docutils',
+    "nbsphinx==0.8.7",
+    "numpydoc==1.1.0",
+    'pylons-sphinx-themes >= 1.0.8',  # Ethical Ads
+    'pylons_sphinx_latesturl',
+    "pydata-sphinx-theme==0.7.1",
+    'repoze.sphinx.autointerface',
+    'sphinxcontrib-autoprogram',
+    "sphinx-autodoc-typehints==1.11.1",
+]
+
+
 configuration = {
     "name": "feature_encoders",
     "version": __version__,
@@ -60,7 +74,7 @@ configuration = {
     "cmdclass": {},
     "tests_require": ["pytest"],
     "data_files": (),
-    "extras_require": {"ci": get_extras_require()},
+    "extras_require": {"ci": get_extras_require(), "docs": docs_extras},
 }
 
 setup(**configuration)
