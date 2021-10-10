@@ -4,7 +4,7 @@ feature-encoders is a library for encoding categorical and numerical features, a
 How to use feature-encoders
 ---------------------------
 
-Please see our `API documentation <https://feature-encoders.readthedocs.io/en/latest/api.html>`__ 
+Please see our `API documentation <https://feature-encoders.readthedocs.io/en/latest/feature_encoders.html>`__ 
 for a complete list of available functions and see our informative 
 `tutorials <https://feature-encoders.readthedocs.io/en/latest/tutorials.html>`__ for more comprehensive example use cases.
 
