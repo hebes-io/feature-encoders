@@ -3,7 +3,7 @@ from feature_encoders import __version__
 
 
 def readme():
-    with open("README.md", encoding='utf-8') as readme_file:
+    with open("README.rst", encoding='utf-8') as readme_file:
         return readme_file.read()
 
 
