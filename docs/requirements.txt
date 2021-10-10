@@ -1,4 +1,0 @@
-nbsphinx
-pydata-sphinx-theme
-ipython
-numpydoc
