@@ -21,14 +21,13 @@ Functionality
 How to use feature-encoders
 ---------------------------
 
-Please see our `API documentation <https://feature-encoders.readthedocs.io/en/latest/feature_encoders.html>`__ for a complete list of available functions and see our informative 
-`tutorials <https://feature-encoders.readthedocs.io/en/latest/tutorials.html>`__ for more comprehensive example use cases.
+Please see our [API documentation](https://feature-encoders.readthedocs.io/en/latest/feature_encoders.html) for a complete list of available functions and see our informative [tutorials](https://feature-encoders.readthedocs.io/en/latest/tutorials.html) for more comprehensive example use cases.
 
 
 Python Version
 --------------
 
-`feature-encoders` supports `Python 3.7+ <https://python3statement.org/>`__
+`feature-encoders` supports [`Python 3.7+](https://python3statement.org/).
 
 
 License
@@ -36,8 +35,6 @@ License
 
 Copyright 2021 Hebes Intelligence. Released under the terms of the Apache License, Version 2.0.
 
-|
-.. image:: https://github.com/hebes-io/feature-encoders/raw/main/EC_support.png
-   :width: 600
+<br>
+<img align="left" width="500" src="https://github.com/hebes-io/feature-encoders/raw/main/EC_support.png">
 
-|
