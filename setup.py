@@ -18,7 +18,6 @@ def docs_extras_require():
         'docutils',
         "nbsphinx==0.8.7",
         'pylons-sphinx-themes >= 1.0.8',  # Ethical Ads
-        "pydata-sphinx-theme==0.7.1",
         "myst-parser==0.15.2"
     ]
     return extras
