@@ -1,18 +1,34 @@
-![logo](https://github.com/hebes-io/eensight/blob/master/logo.png)
-<br/><br/>
+# Feature Encoders
 
-## The `eensight` tool for measurement and verification of energy efficiency improvements
+## Functionality
 
-The `eensight` Python package accompanies the deliverable <b>D7.1 Methods for the dynamic measurement and verification of energy savings</b> of the H2020 project [SENSEI Smart Energy Services to Improve the Energy Efficiency of the European Building Stock](https://senseih2020.eu/). The deliverable can be found at [Zenodo](https://zenodo.org/record/4695123#.YHiUD-gzY2w).
+`feature-encoders` is a library for encoding categorical and numerical features to create features for linear regression models. In particular, it includes functionality for:
 
-The goal of the `eensight` tool is to contribute to the advancement of the automated measurement and verification (M&V) methods for energy efficiency. This goal raises the question of why another M&V methodology anf tool are needed in the first place. 
+1. Applying custom feature generators to a dataset. Users can add a feature generator to the existing ones by declaring a class for the validation of their inputs and a class for their creation.
 
-* The first reason is that there are only a very limited number of M&V frameworks that are ready to be tested and adopted by practitioners. Although the literature on M&V applications is extensive, the gap between: (a) presenting a methodology and its results and (b) offering the tools for practitioners to experiment with this methodology and integrate the parts that they find valuable is most often significant.
 
-* The second reason is that no methodology can be considered a priori the best one. The interaction between any methodology and a specific building – as described by the dataset of its energy/power consumption – determines whether the methodology is suitable for this building or, from the opposite point of view, whether the building is adequately predictable given the selected methodology for M&V. Understanding the aforementioned interaction requires further work on M&V method comparisons, as well as access to a diverse set of M&V models and workflows. 
+2. Encoding categorical and numerical features. The categorical encoder provides the option to reduce the cardinality of a categorical feature by lumping together categories for which the corresponding distibution of the target values is similar.
 
-* Finally, energy efficiency improvements can only be estimated through counterfactual analysis, which leads to increased uncertainty and potential for disputes. Although there has been a lot of focus on comparing M&V methodologies according to their predictive accuracy, improving accuracy does not mitigate by itself the uncertainty; uncertainty is mainly driven by all the building’s aspects that may change over time and render the M&V model irrelevant. Accordingly, the proposed M&V methodology focuses on identifying and deconstructing the consumption patterns of a building as much as it focuses on the M&V model’s predictive accuracy. Such information is essential when the M&V model is monitored during its operation so as to verify the degree to which it remains relevant, as well as to determine what has actually changed and how a model adjustment should be guided.
 
-`eensight` is a [Kedro](https://github.com/quantumblacklabs/kedro)-based application, and all its functionality is provided in the form of Kedro pipelines. The [notebooks/method_explanation](https://github.com/hebes-io/eensight/tree/master/notebooks/method_explanation) folder includes information on how `eensight` can be configured, what methods it utilizes and why it does things this way.  
-<br>
-<img align="left" width="500" src="https://github.com/hebes-io/eensight/blob/master/EC_support.png">
+3. Encoding interactions. Interactions are always pairwise and always between encoders (and not features). The supported interactions are between: (a) categorical and categorical encoders, (b) categorical and linear encoders, (c) categorical and spline encoders, (d) linear and linear encoders, and (e) spline and spline encoders.
+
+
+4. Composing features for linear regression. `feature-encoders` includes a `ModelStructure` class for aggregating feature generators and encoders into main effect and pairwise interaction terms for linear regression models. A `ModelStructure` instance can get information about additional features and encoders either from YAML files or through its API.
+
+
+## How to use feature-encoders
+
+Please see our [API documentation](https://feature-encoders.readthedocs.io/en/latest/feature_encoders.html) for a complete list of available functions and see our informative 
+[tutorials](https://feature-encoders.readthedocs.io/en/latest/tutorials.html) for more comprehensive example use cases.
+
+
+## Python Version
+
+`feature-encoders` supports [Python 3.7+](https://python3statement.org/).
+
+
+## License
+
+Copyright 2021 Hebes Intelligence. Released under the terms of the Apache License, Version 2.0.
+
+<img align="left" width="500" src="https://github.com/hebes-io/feature-encoders/raw/main/EC_support.png">
