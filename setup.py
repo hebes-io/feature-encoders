@@ -17,7 +17,6 @@ def docs_extras_require():
         'Sphinx >= 3.0.0',  # Force RTD to use >= 3.0.0
         'docutils',
         "nbsphinx==0.8.7",
-        "numpydoc==1.1.0",
         'pylons-sphinx-themes >= 1.0.8',  # Ethical Ads
         "pydata-sphinx-theme==0.7.1",
         "myst-parser==0.15.2"
