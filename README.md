@@ -27,7 +27,7 @@ Please see our [API documentation](https://feature-encoders.readthedocs.io/en/la
 Python Version
 --------------
 
-`feature-encoders` supports [`Python 3.7+](https://python3statement.org/).
+`feature-encoders` supports Python 3.7+.
 
 
 License

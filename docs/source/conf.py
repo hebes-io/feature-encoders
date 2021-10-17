@@ -13,6 +13,11 @@
 import os
 import sys
 sys.path.insert(0, os.path.abspath('../../feature_encoders/'))
+sys.path.insert(0, os.path.abspath('../../feature_encoders/compose/'))
+sys.path.insert(0, os.path.abspath('../../feature_encoders/encode/'))
+sys.path.insert(0, os.path.abspath('../../feature_encoders/generate/'))
+sys.path.insert(0, os.path.abspath('../../feature_encoders/models/'))
+sys.path.insert(0, os.path.abspath('../../feature_encoders/validate/'))
 
 
 # -- Project information -----------------------------------------------------
