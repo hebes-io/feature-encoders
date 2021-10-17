@@ -12,47 +12,38 @@ from sklearn.base import BaseEstimator, TransformerMixin, clone
 from sklearn.exceptions import NotFittedError
 from sklearn.utils.validation import check_is_fitted
 
-from .categorical import CategoricalEncoder
-from .identity import IdentityEncoder
-from .spline import SplineEncoder
-from .utils import tensor_product
+from ..utils import tensor_product
+from ._encoders import CategoricalEncoder, IdentityEncoder, SplineEncoder
 
 # ------------------------------------------------------------------------------------
 # Encode pairwise categorical data interactions
+#
+# All encoders generate numpy arrays
 # ------------------------------------------------------------------------------------
 
 
 class ICatEncoder(TransformerMixin, BaseEstimator):
+    """Encode the interaction between two categorical features.
+
+     Interactions are always pairwise and always between encoders (and not features).
+
+    Args:
+        encoder_left (CategoricalEncoder): The encoder for the first of the two features.
+        encoder_right (CategoricalEncoder): The encoder for the second of the two features.
+
+    Raises:
+        ValueError: If any of the two encoders is not a `CategoricalEncoder`.
+        ValueError: If the two encoders do not have the same `encode_as` parameter.
+
+    Note:
+        Both encoders should have the same `encode_as` parameter.
+        If one or both of the encoders is already fitted, it will not be re-fitted during
+        `fit` or `fit_transform`.
+    """
+
     def __init__(
         self, encoder_left: CategoricalEncoder, encoder_right: CategoricalEncoder
     ):
-        """Encode the interaction between two categorical features.
-
-        Parameters
-        ----------
-        encoder_left : CategoricalEncoder
-            The encoder for the first of the two features.
-        encoder_right : CategoricalEncoder
-            The encoder for the second of the two features.
-
-        Raises
-        ------
-        ValueError
-            If any of the two encoders is not a `CategoricalEncoder`.
-        ValueError
-            If the two encoders do not have the same `encode_as` parameter.
-
-        Attributes
-        ----------
-        n_features_out_ : int
-            The total number of output features.
-
-        Notes
-        -----
-        - Both encoders should have the same `encode_as` parameter.
-        - If one or both of the encoders is already fitted, it will not be
-          re-fitted during `fit` or `fit_transform`.
-        """
         if (not isinstance(encoder_left, CategoricalEncoder)) or (
             not isinstance(encoder_right, CategoricalEncoder)
         ):
@@ -69,19 +60,14 @@ class ICatEncoder(TransformerMixin, BaseEstimator):
         self.encode_as_ = encoder_left.encode_as
 
     def fit(self, X: pd.DataFrame, y=None):
-        """Fit the encoder.
+        """Fit the encoder on the available data.
 
-        Parameters
-        ----------
-        X : pandas.DataFrame of shape (n_samples, n_features)
-            The data to fit.
-        y : None, optional
-            Ignored, by default None
+        Args:
+            X (pandas.DataFrame of shape (n_samples, n_features)): The input dataframe.
+            y (None, optional): Ignored. Defaults to None.
 
-        Returns
-        -------
-        object
-            Returns the fitted instance itself.
+        Returns:
+            ICatEncoder: Fitted encoder.
         """
         for encoder in (self.encoder_left, self.encoder_right):
             try:
@@ -96,17 +82,15 @@ class ICatEncoder(TransformerMixin, BaseEstimator):
         return self
 
     def transform(self, X: pd.DataFrame):
-        """Transform the data.
+        """Apply the encoder.
 
-        Parameters
-        ----------
-        X : pandas.DataFrame of shape (n_samples, n_features)
-            The data to transform.
+        Args:
+            X (pandas.DataFrame of shape (n_samples, n_features)): The input
+                dataframe.
 
-        Returns
-        -------
-        numpy.ndarray of shape (n_samples, n_features_out_)
-            The matrix of interaction features.
+        Returns:
+            numpy array of shape (n_samples, n_features_out_): The matrix of
+                interaction features as a numpy array.
         """
         check_is_fitted(self, "fitted_")
 
@@ -128,31 +112,21 @@ class ICatEncoder(TransformerMixin, BaseEstimator):
 
 
 class ISplineEncoder(TransformerMixin, BaseEstimator):
+    """Encode the interaction between two spline-encoded numerical features.
+
+    Args:
+        encoder_left (SplineEncoder): The encoder for the first of the two features.
+        encoder_right (SplineEncoder): The encoder for the second of the two features.
+
+    Raises:
+        ValueError:If any of the two encoders is not a `SplineEncoder`.
+
+    Note:
+        If one or both of the encoders is already fitted, it will not be re-fitted
+        during `fit` or `fit_transform`.
+    """
+
     def __init__(self, encoder_left: SplineEncoder, encoder_right: SplineEncoder):
-        """Encode the interaction between two spline-encoded numerical features.
-
-        Parameters
-        ----------
-        encoder_left : SplineEncoder
-            The encoder for the first of the two features.
-        encoder_right : SplineEncoder
-            The encoder for the second of the two features.
-
-        Raises
-        ------
-        ValueError
-            If any of the two encoders is not a `SplineEncoder`.
-
-        Attributes
-        ----------
-        n_features_out_ : int
-            The total number of output features.
-
-        Notes
-        -----
-        If one or both of the encoders is already fitted, it will not be
-        re-fitted during `fit` or `fit_transform`.
-        """
         if (not isinstance(encoder_left, SplineEncoder)) or (
             not isinstance(encoder_right, SplineEncoder)
         ):
@@ -164,19 +138,14 @@ class ISplineEncoder(TransformerMixin, BaseEstimator):
         self.encoder_right = encoder_right
 
     def fit(self, X: pd.DataFrame, y=None):
-        """Fit the encoder.
+        """Fit the encoder on the available data.
 
-        Parameters
-        ----------
-        X : pandas.DataFrame of shape (n_samples, n_features)
-            The data to fit.
-        y : None, optional
-            Ignored, by default None
+        Args:
+            X (pandas.DataFrame of shape (n_samples, n_features)): The input dataframe.
+            y (None, optional): Ignored. Defaults to None.
 
-        Returns
-        -------
-        object
-            Returns the fitted instance itself.
+        Returns:
+            ISplineEncoder: Fitted encoder.
         """
         for encoder in (self.encoder_left, self.encoder_right):
             try:
@@ -191,17 +160,15 @@ class ISplineEncoder(TransformerMixin, BaseEstimator):
         return self
 
     def transform(self, X: pd.DataFrame):
-        """Transform the data.
+        """Apply the encoder.
 
-        Parameters
-        ----------
-        X : pandas.DataFrame of shape (n_samples, n_features)
-            The data to transform.
+        Args:
+            X (pandas.DataFrame of shape (n_samples, n_features)): The input
+                dataframe.
 
-        Returns
-        -------
-        numpy.ndarray of shape (n_samples, n_features_out_)
-            The matrix of interaction features.
+        Returns:
+            numpy array of shape (n_samples, n_features_out_): The matrix of
+                interaction features as a numpy array.
         """
         check_is_fitted(self, "fitted_")
         X_left = self.encoder_left.transform(X)
@@ -210,31 +177,21 @@ class ISplineEncoder(TransformerMixin, BaseEstimator):
 
 
 class ProductEncoder(TransformerMixin, BaseEstimator):
+    """Encode the interaction between two linear numerical features.
+
+    Args:
+        encoder_left (IdentityEncoder): The encoder for the first of the two features.
+        encoder_right (IdentityEncoder): The encoder for the second of the two features.
+
+    Raises:
+        ValueError: If any of the two encoders is not an `IdentityEncoder`.
+
+    Note:
+        If one or both of the encoders is already fitted, it will not be re-fitted during
+        `fit` or `fit_transform`.
+    """
+
     def __init__(self, encoder_left: IdentityEncoder, encoder_right: IdentityEncoder):
-        """Encode the interaction between two linear numerical features.
-
-        Parameters
-        ----------
-        encoder_left : IdentityEncoder
-            The encoder for the first of the two features.
-        encoder_right : IdentityEncoder
-            The encoder for the second of the two features.
-
-        Raises
-        ------
-        ValueError
-            If any of the two encoders is not an `IdentityEncoder`.
-
-        Attributes
-        ----------
-        n_features_out_ : int
-            The total number of output features.
-
-        Notes
-        -----
-        If one or both of the encoders is already fitted, it will not be
-        re-fitted during `fit` or `fit_transform`.
-        """
         if (not isinstance(encoder_left, IdentityEncoder)) or (
             not isinstance(encoder_right, IdentityEncoder)
         ):
@@ -246,24 +203,17 @@ class ProductEncoder(TransformerMixin, BaseEstimator):
         self.encoder_right = encoder_right
 
     def fit(self, X: pd.DataFrame, y=None):
-        """Fit the encoder.
+        """Fit the encoder on the available data.
 
-        Parameters
-        ----------
-        X : pandas.DataFrame of shape (n_samples, n_features)
-            The data to fit.
-        y : None, optional
-            Ignored, by default None
+        Args:
+            X (pandas.DataFrame of shape (n_samples, n_features)): The input dataframe.
+            y (None, optional): Ignored. Defaults to None.
 
-        Returns
-        -------
-        object
-            Returns the fitted instance itself.
+        Raises:
+            ValueError: If any of the two encoders is not a single-feature encoder.
 
-        Raises
-        ------
-        ValueError
-            If any of the two encoders is not a single-feature encoder.
+        Returns:
+            ProductEncoder: Fitted encoder.
         """
         for encoder in (self.encoder_left, self.encoder_right):
             try:
@@ -281,17 +231,15 @@ class ProductEncoder(TransformerMixin, BaseEstimator):
         return self
 
     def transform(self, X: pd.DataFrame):
-        """Transform the data.
+        """Apply the encoder.
 
-        Parameters
-        ----------
-        X : pandas.DataFrame of shape (n_samples, n_features)
-            The data to transform.
+        Args:
+            X (pandas.DataFrame of shape (n_samples, n_features)): The input
+                dataframe.
 
-        Returns
-        -------
-        numpy.ndarray of shape (n_samples, n_features_out_)
-            The matrix of interaction features.
+        Returns:
+            numpy array of shape (n_samples, n_features_out_): The matrix of
+                interaction features as a numpy array.
         """
         check_is_fitted(self, "fitted_")
         X_left = self.encoder_left.transform(X)
@@ -305,37 +253,26 @@ class ProductEncoder(TransformerMixin, BaseEstimator):
 
 
 class ICatLinearEncoder(TransformerMixin, BaseEstimator):
+    """Encode the interaction between one categorical and one linear numerical feature.
+
+    Args:
+        encoder_cat (CategoricalEncoder): The encoder for the categorical feature.
+            It must encode features in an one-hot form.
+        encoder_num (IdentityEncoder): The encoder for the numerical feature.
+
+    Raises:
+        ValueError: If `encoder_cat` is not  a `CategoricalEncoder`.
+        ValueError: If `encoder_num` is not  an `IdentityEncoder`.
+        ValueError: If `encoder_cat` is not encoded as one-hot.
+
+    Note:
+        If one or both of the encoders is already fitted, it will not be re-fitted
+        during `fit` or `fit_transform`.
+    """
+
     def __init__(
         self, *, encoder_cat: CategoricalEncoder, encoder_num: IdentityEncoder
     ):
-        """Encode the interaction between one categorical and one linear numerical feature.
-
-        Parameters
-        ----------
-        encoder_cat : CategoricalEncoder
-            The encoder for the categorical feature. It must encode features in an one-hot form.
-        encoder_num : IdentityEncoder
-            The encoder for the numerical feature.
-
-        Raises
-        ------
-        ValueError
-            If `encoder_cat` is not  a `CategoricalEncoder`.
-        ValueError
-            If `encoder_num` is not  an `IdentityEncoder`.
-        ValueError
-            If `encoder_cat` is not encoded as one-hot.
-
-        Attributes
-        ----------
-        n_features_out_ : int
-            The total number of output features.
-
-        Notes
-        -----
-        If one or both of the encoders is already fitted, it will not be
-        re-fitted during `fit` or `fit_transform`.
-        """
         if not isinstance(encoder_cat, CategoricalEncoder):
             raise ValueError("`encoder_cat` must be a CategoricalEncoder")
 
@@ -352,19 +289,14 @@ class ICatLinearEncoder(TransformerMixin, BaseEstimator):
         self.encoder_num = encoder_num
 
     def fit(self, X: pd.DataFrame, y=None):
-        """Fit the encoder.
+        """Fit the encoder on the available data.
 
-        Parameters
-        ----------
-        X : pandas.DataFrame of shape (n_samples, n_features)
-            The data to fit.
-        y : None, optional
-            Ignored, by default None
+        Args:
+            X (pandas.DataFrame of shape (n_samples, n_features)): The input dataframe.
+            y (None, optional): Ignored. Defaults to None.
 
-        Returns
-        -------
-        object
-            Returns the fitted instance itself.
+        Returns:
+            ICatLinearEncoder: Fitted encoder.
         """
         try:
             check_is_fitted(self.encoder_cat, "fitted_")
@@ -383,17 +315,15 @@ class ICatLinearEncoder(TransformerMixin, BaseEstimator):
         return self
 
     def transform(self, X: pd.DataFrame):
-        """Transform the data.
+        """Apply the encoder.
 
-        Parameters
-        ----------
-        X : pandas.DataFrame of shape (n_samples, n_features)
-            The data to transform.
+        Args:
+            X (pandas.DataFrame of shape (n_samples, n_features)): The input
+                dataframe.
 
-        Returns
-        -------
-        numpy.ndarray of shape (n_samples, n_features_out_)
-            The matrix of interaction features.
+        Returns:
+            numpy array of shape (n_samples, n_features_out_): The matrix of
+                interaction features as a numpy array.
         """
         check_is_fitted(self, "fitted_")
         X_cat = self.encoder_cat.transform(X)
@@ -406,44 +336,32 @@ class ICatLinearEncoder(TransformerMixin, BaseEstimator):
 
 
 class ICatSplineEncoder(TransformerMixin, BaseEstimator):
+    """Encode the interaction between one categorical and one spline-encoded
+    numerical feature.
+
+    Args:
+        encoder_cat (CategoricalEncoder): The encoder for the categorical
+            feature. It must encode features in an one-hot form.
+        encoder_num (SplineEncoder): The encoder for the numerical feature.
+
+    Raises:
+        ValueError: If `encoder_cat` is not  a `CategoricalEncoder`.
+        ValueError: If `encoder_num` is not  a `SplineEncoder`.
+        ValueError: If `encoder_cat` is not encoded as one-hot.
+
+    Note:
+        If the categorical encoder is already fitted, it will not be re-fitted
+        during `fit` or `fit_transform`.
+        The numerical encoder will always be (re)fitted (one encoder per level
+        of categorical feature.
+    """
+
     def __init__(
         self,
         *,
         encoder_cat: CategoricalEncoder,
         encoder_num: SplineEncoder,
     ):
-        """Encode the interaction between one categorical and one spline-encoded
-        numerical feature.
-
-        Parameters
-        ----------
-        encoder_cat : CategoricalEncoder
-            The encoder for the categorical feature. It must encode features in
-            an one-hot form.
-        encoder_num : SplineEncoder
-            The encoder for the numerical feature.
-
-        Raises
-        ------
-        ValueError
-            If `encoder_cat` is not  a `CategoricalEncoder`.
-        ValueError
-            If `encoder_num` is not  a `SplineEncoder`.
-        ValueError
-            If `encoder_cat` is not encoded as one-hot.
-
-        Attributes
-        ----------
-        n_features_out_ : int
-            The total number of output features.
-
-        Notes
-        -----
-        - If the categorical encoder is already fitted, it will not be re-fitted during
-          `fit` or `fit_transform`.
-        - The numerical encoder will always be (re)fitted (one encoder per level of
-          categorical feature).
-        """
         if not isinstance(encoder_cat, CategoricalEncoder):
             raise ValueError("`encoder_cat` must be a CategoricalEncoder")
 
@@ -460,19 +378,14 @@ class ICatSplineEncoder(TransformerMixin, BaseEstimator):
         self.encoder_num = encoder_num
 
     def fit(self, X: pd.DataFrame, y=None):
-        """Fit the encoder.
+        """Fit the encoder on the available data.
 
-        Parameters
-        ----------
-        X : pandas.DataFrame of shape (n_samples, n_features)
-            The data to fit.
-        y : None, optional
-            Ignored, by default None
+        Args:
+            X (pandas.DataFrame of shape (n_samples, n_features)): The input dataframe.
+            y (None, optional): Ignored. Defaults to None.
 
-        Returns
-        -------
-        object
-            Returns the fitted instance itself.
+        Returns:
+            ICatSplineEncoder: Fitted encoder.
         """
         try:
             check_is_fitted(self.encoder_cat, "fitted_")
@@ -498,17 +411,15 @@ class ICatSplineEncoder(TransformerMixin, BaseEstimator):
         return self
 
     def transform(self, X: pd.DataFrame):
-        """Transform the data.
+        """Apply the encoder.
 
-        Parameters
-        ----------
-        X : pandas.DataFrame of shape (n_samples, n_features)
-            The data to transform.
+        Args:
+            X (pandas.DataFrame of shape (n_samples, n_features)): The input
+                dataframe.
 
-        Returns
-        -------
-        numpy.ndarray of shape (n_samples, n_features_out_)
-            The matrix of interaction features.
+        Returns:
+            numpy array of shape (n_samples, n_features_out_): The matrix of
+                interaction features as a numpy array.
         """
         check_is_fitted(self, "fitted_")
 

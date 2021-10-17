@@ -11,7 +11,7 @@ Feature Encoders documentation
    tutorials
    help
 
-.. include:: ../../README.rst
+.. include:: ../../README.md
 
 Indices and tables
 ==================

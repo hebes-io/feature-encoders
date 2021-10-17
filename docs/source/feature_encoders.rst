@@ -1,69 +1,25 @@
-API
+feature\_encoders package
 =========================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   feature_encoders.compose
+   feature_encoders.encode
+   feature_encoders.generate
+   feature_encoders.models
+   feature_encoders.validate
 
 Submodules
 ----------
 
-feature\_encoders.categorical module
-------------------------------------
-
-.. automodule:: feature_encoders.categorical
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-feature\_encoders.cyclical module
+feature\_encoders.settings module
 ---------------------------------
 
-.. automodule:: feature_encoders.cyclical
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-feature\_encoders.identity module
----------------------------------
-
-.. automodule:: feature_encoders.identity
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-feature\_encoders.interactions module
--------------------------------------
-
-.. automodule:: feature_encoders.interactions
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-feature\_encoders.safe\_one\_hot module
----------------------------------------
-
-.. automodule:: feature_encoders.safe_one_hot
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-feature\_encoders.safe\_ordinal module
---------------------------------------
-
-.. automodule:: feature_encoders.safe_ordinal
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-feature\_encoders.spline module
--------------------------------
-
-.. automodule:: feature_encoders.spline
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-feature\_encoders.target\_cluster module
-----------------------------------------
-
-.. automodule:: feature_encoders.target_cluster
+.. automodule:: feature_encoders.settings
    :members:
    :undoc-members:
    :show-inheritance:

@@ -1,0 +1,11 @@
+trend:
+  validate: validate.TrendSchema
+  generate: generate.TrendFeatures
+
+datetime:
+  validate: validate.DatetimeSchema
+  generate: generate.DatetimeFeatures
+
+cyclical:
+  validate: validate.CyclicalSchema
+  generate: generate.CyclicalFeatures
