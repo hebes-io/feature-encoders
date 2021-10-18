@@ -6,10 +6,8 @@
 
 import importlib
 
-from ..settings import ADDED_PACKAGES
-from ..utils import as_list
 
-_DEFAULT_PACKAGES = ["feature_encoders.", ""] + as_list(ADDED_PACKAGES)
+_DEFAULT_PACKAGES = ["feature_encoders.", ""]
 
 
 def load_obj(obj_path: str, default_obj_path: str = ""):

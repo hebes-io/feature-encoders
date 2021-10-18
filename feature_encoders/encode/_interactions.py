@@ -89,8 +89,7 @@ class ICatEncoder(TransformerMixin, BaseEstimator):
                 dataframe.
 
         Returns:
-            numpy array of shape (n_samples, n_features_out_): The matrix of
-                interaction features as a numpy array.
+            numpy array: The matrix of interaction features as a numpy array.
         """
         check_is_fitted(self, "fitted_")
 
@@ -167,8 +166,7 @@ class ISplineEncoder(TransformerMixin, BaseEstimator):
                 dataframe.
 
         Returns:
-            numpy array of shape (n_samples, n_features_out_): The matrix of
-                interaction features as a numpy array.
+            numpy array: The matrix of interaction features as a numpy array.
         """
         check_is_fitted(self, "fitted_")
         X_left = self.encoder_left.transform(X)
@@ -238,8 +236,7 @@ class ProductEncoder(TransformerMixin, BaseEstimator):
                 dataframe.
 
         Returns:
-            numpy array of shape (n_samples, n_features_out_): The matrix of
-                interaction features as a numpy array.
+            numpy array: The matrix of interaction features as a numpy array.
         """
         check_is_fitted(self, "fitted_")
         X_left = self.encoder_left.transform(X)
@@ -322,8 +319,7 @@ class ICatLinearEncoder(TransformerMixin, BaseEstimator):
                 dataframe.
 
         Returns:
-            numpy array of shape (n_samples, n_features_out_): The matrix of
-                interaction features as a numpy array.
+            numpy array: The matrix of interaction features as a numpy array.
         """
         check_is_fitted(self, "fitted_")
         X_cat = self.encoder_cat.transform(X)
@@ -418,8 +414,7 @@ class ICatSplineEncoder(TransformerMixin, BaseEstimator):
                 dataframe.
 
         Returns:
-            numpy array of shape (n_samples, n_features_out_): The matrix of
-                interaction features as a numpy array.
+            numpy array : The matrix of interaction features as a numpy array.
         """
         check_is_fitted(self, "fitted_")
 

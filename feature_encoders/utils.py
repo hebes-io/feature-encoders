@@ -202,12 +202,6 @@ def check_y(y: Union[pd.Series, pd.DataFrame], index=None):
 def tensor_product(a: np.ndarray, b: np.ndarray, reshape=True):
     """Compute the tensor product of two matrices.
 
-    If A is (n, m_a), B is (n, m_b),
-    then the result is
-        (n, m_a * m_b) if reshape = True.
-    or
-        (n, m_a, m_b) otherwise
-
     Args:
         a (numpy array of shape (n, m_a)): The first matrix.
         b (numpy array of shape (n, m_b)): The second matrix.
@@ -219,7 +213,7 @@ def tensor_product(a: np.ndarray, b: np.ndarray, reshape=True):
         ValueError: If both input arrays do not have the same number of samples.
 
     Returns:
-        numpy.ndarray of shape (n, m_a * m_b) if reshape = True else of shape (n, m_a, m_b).
+        numpy.ndarray of shape (n, m_a * m_b) if `reshape = True` else of shape (n, m_a, m_b).
     """
     if (a.ndim != 2) or (b.ndim != 2):
         raise ValueError("Inputs must be 2-dimensional")
@@ -257,8 +251,7 @@ def add_constant(
             is present. Defaults to "skip".
 
     Returns:
-        numpy.ndarray:  The original values with a constant (column of ones) as
-            the first or last column.
+        numpy.ndarray:  The original values with a constant (column of ones).
     """
     x = np.asanyarray(data)
     ndim = x.ndim
@@ -289,14 +282,13 @@ def load_config(model="towt", features="default", merge_multiple=False):
     """Load model configuration and feature generator mapping.
 
     Given `model` and `features`, the function searches for files in:
-    ```python
-    conf_path = settings.CONF_ROOT
-    if not os.path.isabs(conf_path):
-        conf_path = os.path.join(settings.PROJECT_PATH, conf_path)
+    ::
+        conf_path = settings.CONF_ROOT
+        if not os.path.isabs(conf_path):
+            conf_path = os.path.join(settings.PROJECT_PATH, conf_path)
 
-    model_files = glob.glob(f"{conf_path}/models/{model}.*")
-    feature_files = glob.glob(f"{conf_path}/features/{features}.*")
-    ```
+        model_files = glob.glob(f"{conf_path}/models/{model}.*")
+        feature_files = glob.glob(f"{conf_path}/features/{features}.*")
 
     Args:
         model (str, optional): The name of the model configuration to load.

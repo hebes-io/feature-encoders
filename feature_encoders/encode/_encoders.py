@@ -112,8 +112,7 @@ class IdentityEncoder(TransformerMixin, BaseEstimator):
                 already exists in the returned columns.
 
         Returns:
-            numpy array of shape (n_samples, n_features_out_): The selected
-                column subset as a numpy array.
+            numpy array of shape: The selected column subset as a numpy array.
         """
         check_is_fitted(self, "fitted_")
         X = check_X(X)
@@ -215,8 +214,7 @@ class SafeOrdinalEncoder(TransformerMixin, BaseEstimator):
             ValueError: If the input data does not pass the checks of `utils.check_X`.
 
         Returns:
-            numpy array of shape (n_samples, n_features_out_): The encoded column subset
-                as a numpy array.
+            numpy array of shape: The encoded column subset as a numpy array.
         """
         check_is_fitted(self, "fitted_")
         X = check_X(X, exists=self.features_)
@@ -302,8 +300,7 @@ class SafeOneHotEncoder(TransformerMixin, BaseEstimator):
             ValueError: If the input data does not pass the checks of `utils.check_X`.
 
         Returns:
-            numpy array of shape (n_samples, n_features_out_): The encoded column subset
-                as a numpy array.
+            numpy array of shape: The encoded column subset as a numpy array.
         """
         check_is_fitted(self, "fitted_")
         X = check_X(X, exists=self.features_)
@@ -347,14 +344,19 @@ class TargetClusterEncoder(TransformerMixin, BaseEstimator):
         max_features (int, float or {"auto", "sqrt", "log2"}, optional): The number of
             features that the decision tree considers when looking for the best split:
 
-            - If int, then consider `max_features` features at each split of the decision
-            tree.
-            - If float, then `max_features` is a fraction and `int(max_features * n_features)`
-            features are considered at each split.
-            - If "auto", then `max_features=n_features`.
-            - If "sqrt", then `max_features=sqrt(n_features)`.
-            - If "log2", then `max_features=log2(n_features)`.
-            - If None, then `max_features=n_features`.
+                - If int, then consider `max_features` features at each split of the decision
+                  tree
+
+                - If float, then `max_features` is a fraction and `int(max_features * n_features)`
+                  features are considered at each split
+
+                - If "auto", then `max_features=n_features`
+
+                - If "sqrt", then `max_features=sqrt(n_features)`
+
+                - If "log2", then `max_features=log2(n_features)`
+
+                - If None, then `max_features=n_features`
 
             Defaults to "auto".
         random_state (int or RandomState instance, optional): Controls the randomness of
@@ -520,8 +522,7 @@ class TargetClusterEncoder(TransformerMixin, BaseEstimator):
             X (pandas.DataFrame of shape (n_samples, n_features)): The input dataframe.
 
         Returns:
-            numpy array, shape (n_samples, n_features_out_): The encoded column subset
-                as a numpy array.
+            numpy array: The encoded column subset as a numpy array.
 
         Raises:
             ValueError: If the input data does not pass the checks of `utils.check_X`.
@@ -581,14 +582,19 @@ class CategoricalEncoder(TransformerMixin, BaseEstimator):
         max_features (int, float or {"auto", "sqrt", "log2"}, optional): The number of
             features that the decision tree considers when looking for the best split:
 
-            - If int, then consider `max_features` features at each split of the decision
-              tree.
-            - If float, then `max_features` is a fraction and `int(max_features * n_features)`
-              features are considered at each split.
-            - If "auto", then `max_features=n_features`.
-            - If "sqrt", then `max_features=sqrt(n_features)`.
-            - If "log2", then `max_features=log2(n_features)`.
-            - If None, then `max_features=n_features`.
+                - If int, then consider `max_features` features at each split of the decision
+                  tree
+
+                - If float, then `max_features` is a fraction and `int(max_features * n_features)`
+                  features are considered at each split
+
+                - If "auto", then `max_features=n_features`
+
+                - If "sqrt", then `max_features=sqrt(n_features)`
+
+                - If "log2", then `max_features=log2(n_features)`
+
+                - If None, then `max_features=n_features`
 
             Defaults to "auto".
         random_state (int or RandomState instance, optional): Controls the randomness of
@@ -597,12 +603,12 @@ class CategoricalEncoder(TransformerMixin, BaseEstimator):
         encode_as ({'onehot', 'ordinal'}, optional): Method used to encode the transformed
             result.
 
-            - onehot
-                Encode the transformed result with one-hot encoding and return a dense array.
-            - ordinal
-                Encode the transformed result as integer values.
+                - If "onehot", encode the transformed result with one-hot encoding and return a
+                  dense array
 
-        Defaults to "onehot".
+                - If "ordinal", encode the transformed result as integer values
+
+            Defaults to "onehot".
     """
 
     def __init__(
@@ -738,8 +744,7 @@ class CategoricalEncoder(TransformerMixin, BaseEstimator):
             ValueError: If the input data does not pass the checks of `utils.check_X`.
 
         Returns:
-            numpy array of shape (n_samples, n_features_out_): The encoded features
-                as a numpy array.
+            numpy array: The encoded features as a numpy array.
         """
         check_is_fitted(self, "fitted_")
         X = check_X(X, exists=self.feature)
@@ -763,15 +768,17 @@ class SplineEncoder(TransformerMixin, BaseEstimator):
         strategy ({'uniform', 'quantile'} or array-like of shape (n_knots, n_features),
             optional): Set knot positions such that first knot <= features <= last knot.
 
-            - If 'uniform', `n_knots` number of knots are distributed uniformly
-              from min to max values of the features (each bin has the same width).
-            - If 'quantile', they are distributed uniformly along the quantiles of
-              the features (each bin has the same number of observations).
-            - If an array-like is given, it directly specifies the sorted knot
-              positions including the boundary knots. Note that, internally,
-              `degree` number of knots are added before the first knot, the same
-              after the last knot.
+                - If 'uniform', `n_knots` number of knots are distributed uniformly
+                  from min to max values of the features (each bin has the same width)
 
+                - If 'quantile', they are distributed uniformly along the quantiles of
+                  the features (each bin has the same number of observations)
+
+                - If an array-like is given, it directly specifies the sorted knot
+                  positions including the boundary knots. Note that, internally,
+                  `degree` number of knots are added before the first knot, the same
+                  after the last knot
+              
             Defaults to "uniform".
         extrapolation ({'error', 'constant', 'linear', 'continue'}, optional): If 'error',
             values outside the min and max values of the training features raises a `ValueError`.
@@ -848,7 +855,7 @@ class SplineEncoder(TransformerMixin, BaseEstimator):
             ValueError: If the input data does not pass the checks of `utils.check_X`.
 
         Returns:
-            numpy.ndarray of shape (n_samples, n_features_out_): The B-splines matrix.
+            numpy.ndarray: The B-splines matrix.
         """
         check_is_fitted(self, "fitted_")
         X = check_X(X, exists=self.feature)
