@@ -1,8 +1,13 @@
-from setuptools import setup
+import os
+from setuptools import find_packages, setup
+
 from feature_encoders import __version__
 
 
-def ci_extras_require():
+here = os.path.abspath(os.path.dirname(__file__))
+
+
+def dev_extras_require():
     extras = [
         "flake8 >= 3.9.2",
         "flake8-docstrings >= 1.6.0",
@@ -32,40 +37,48 @@ with open("requirements.txt", "r", encoding="utf-8") as f:
             requires.append(req)
 
 
+# Get the long description from the README file
+with open(os.path.join(here, "README.md"), encoding="utf-8") as f:
+    readme = f.read()
+
+
+
 configuration = {
-    "name": "feature_encoders",
+    "name": "feature-encoders",
     "version": __version__,
-    "python_requires=": "==3.8",
+    "python_requires=": ">=3.7",
     "description": (
-        "A library for encoding features and their "
-        "pairwise interactions."
+        "A library for encoding features and their pairwise interactions."
     ),
+    "long_description": readme,
+    "long_description_content_type": "text/markdown",
     "classifiers": [
         "Development Status :: 3 - Alpha",
         "Intended Audience :: Science/Research",
         "Intended Audience :: Developers",
-        "License :: OSI Approved :: Apache License, Version 2.0",
-        "Programming Language :: Python",
+        "License :: OSI Approved :: Apache Software License",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
         "Topic :: Software Development",
         "Topic :: Scientific/Engineering",
         "Operating System :: Microsoft :: Windows",
         "Operating System :: POSIX",
         "Operating System :: Unix",
         "Operating System :: MacOS",
-        "Programming Language :: Python :: 3.8",
     ],
     "keywords": "feature encoding interactions",
     "url": "https://github.com/hebes-io/feature-encoders",
     "maintainer": "Sotiris Papadelis",
     "maintainer_email": "spapadel@gmail.com",
     "license": "Apache License, Version 2.0",
-    "packages": ["feature_encoders"],
+    "packages": find_packages(),
     "install_requires": requires,
     "ext_modules": [],
     "cmdclass": {},
     "tests_require": ["pytest"],
     "data_files": (),
-    "extras_require": {"ci": ci_extras_require(), "docs": docs_extras_require()},
+    "extras_require": {"dev": dev_extras_require(), "docs": docs_extras_require()},
 }
 
 setup(**configuration)
