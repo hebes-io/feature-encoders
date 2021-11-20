@@ -60,7 +60,7 @@ def _interaction_by_types(left_enc, right_enc):
     left_enc_type = type(left_enc).__name__
     right_enc_type = type(right_enc).__name__
 
-    if (left_enc_type, right_enc_type) == ("CategoricalEncoder", "categorical"):
+    if (left_enc_type, right_enc_type) == ("CategoricalEncoder", "CategoricalEncoder"):
         return ICatEncoder(left_enc, right_enc)
     elif (left_enc_type, right_enc_type) == ("CategoricalEncoder", "IdentityEncoder"):
         return ICatLinearEncoder(encoder_cat=left_enc, encoder_num=right_enc)

@@ -158,6 +158,7 @@ class DatetimeFeatures(TransformerMixin, BaseEstimator):
         Raises:
             ValueError: If the input data does not pass the checks of `utils.check_X`.
         """
+
         X = check_X(X)
         dt_column = get_datetime_data(X, col_name=self.ds)
         self.attr_ = self._get_all_attributes(dt_column)

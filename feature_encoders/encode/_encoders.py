@@ -477,6 +477,7 @@ class TargetClusterEncoder(TransformerMixin, BaseEstimator):
                 or is_integer(X[col])
             ):
                 X_train = pd.concat((X_train, pd.get_dummies(X[col])), axis=1)
+                X_train.columns = X_train.columns.astype(str)
             else:
                 X_train = pd.concat((X_train, X[col]), axis=1)
 
@@ -778,7 +779,7 @@ class SplineEncoder(TransformerMixin, BaseEstimator):
                   positions including the boundary knots. Note that, internally,
                   `degree` number of knots are added before the first knot, the same
                   after the last knot
-              
+
             Defaults to "uniform".
         extrapolation ({'error', 'constant', 'linear', 'continue'}, optional): If 'error',
             values outside the min and max values of the training features raises a `ValueError`.

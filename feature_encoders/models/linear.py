@@ -4,7 +4,7 @@
 # This source code is licensed under the Apache License, Version 2.0 found in the
 # LICENSE file in the root directory of this source tree.
 
-from typing import Dict, Union
+from typing import Union
 
 import numpy as np
 import pandas as pd
@@ -92,7 +92,7 @@ class LinearPredictor(RegressorMixin, BaseEstimator):
         X = check_X(X)
         y = check_y(y, index=X.index)
         self.target_name_ = y.columns[0]
-
+        
         design_matrix = self.composer_.fit_transform(X, y)
         self.n_parameters_ = design_matrix.shape[1]
         self.dof_ = np.linalg.matrix_rank(design_matrix)

@@ -296,6 +296,22 @@ class GroupedPredictor(RegressorMixin, BaseEstimator):
     def predict(
         self, X: pd.DataFrame, include_clusters=False, include_components=False
     ):
+        """Predict given new input data.
+
+        Args:
+            X (pandas.DataFrame): Input data.
+            include_clusters (bool, optional): Whether to include the added clusters in the
+                returned prediction. Defaults to False.
+            include_components (bool, optional): Whether to include the contribution of the
+                individual components of the model structure in the returned prediction.
+                Defaults to False.
+
+        Raises:
+            ValueError: If the input data does not pass the checks of `utils.check_X`.
+
+        Returns:
+            pandas.DataFrame: The predicted values.
+        """
         check_is_fitted(self, "fitted_")
         if self.added_features_:
             X = reduce(
