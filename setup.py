@@ -20,10 +20,10 @@ def dev_extras_require():
 def docs_extras_require():
     extras = [
         'Sphinx >= 3.0.0',  # Force RTD to use >= 3.0.0
-        'docutils',
-        "nbsphinx==0.8.7",
+        'docutils < 0.18',
+        "nbsphinx >= 0.8.7",
         'pylons-sphinx-themes >= 1.0.8',  # Ethical Ads
-        "myst-parser==0.15.2"
+        "myst-parse >= 0.15.2"
     ]
     return extras
 
@@ -76,8 +76,8 @@ configuration = {
     "install_requires": requires,
     "ext_modules": [],
     "cmdclass": {},
-    "tests_require": ["pytest"],
-    "data_files": (),
+    "include_package_data": True,
+    "package_data": {'feature_encoders': ['config/features/*.yaml', 'config/models/*.yaml']},
     "extras_require": {"dev": dev_extras_require(), "docs": docs_extras_require()},
 }
 

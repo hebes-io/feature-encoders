@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 
-import os
-from pathlib import Path
+import importlib.resources
 
-# Define the configuration folder.
-CONF_ROOT = "conf"
+import feature_encoders.config
 
-PROJECT_PATH = Path(os.path.dirname(os.path.abspath(__file__))).resolve().parent
+with importlib.resources.path(feature_encoders.config, "__init__.py") as init_path:
+    CONF_PATH = init_path.resolve().parent

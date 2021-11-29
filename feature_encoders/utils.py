@@ -5,7 +5,6 @@
 # LICENSE file in the root directory of this source tree.
 
 import glob
-import os
 from typing import Any, Union
 
 import numpy as np
@@ -20,7 +19,7 @@ from pandas.api.types import is_object_dtype as is_object
 from sklearn.utils import check_array
 from sklearn.utils.validation import column_or_1d
 
-from feature_encoders.settings import CONF_ROOT, PROJECT_PATH
+from feature_encoders.settings import CONF_PATH
 
 
 def maybe_reshape_2d(arr: np.ndarray):
@@ -283,10 +282,7 @@ def load_config(model="towt", features="default", merge_multiple=False):
 
     Given `model` and `features`, the function searches for files in:
     ::
-        conf_path = settings.CONF_ROOT
-        if not os.path.isabs(conf_path):
-            conf_path = os.path.join(settings.PROJECT_PATH, conf_path)
-
+        conf_path = str(CONF_PATH)
         model_files = glob.glob(f"{conf_path}/models/{model}.*")
         feature_files = glob.glob(f"{conf_path}/features/{features}.*")
 
@@ -302,9 +298,7 @@ def load_config(model="towt", features="default", merge_multiple=False):
     Returns:
         (dict, dict): The model configuration and feature mapping as dictionaries.
     """
-    conf_path = CONF_ROOT
-    if not os.path.isabs(conf_path):
-        conf_path = os.path.join(PROJECT_PATH, conf_path)
+    conf_path = str(CONF_PATH)
 
     model_conf = None
     model_files = glob.glob(f"{conf_path}/models/{model}.*")

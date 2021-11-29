@@ -27,6 +27,7 @@ regressors:
     degree: 1
     strategy: uniform 
     extrapolation: constant
+    include_bias: true 
     interaction_only: true
 
 interactions:

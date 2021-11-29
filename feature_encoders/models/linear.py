@@ -92,7 +92,7 @@ class LinearPredictor(RegressorMixin, BaseEstimator):
         X = check_X(X)
         y = check_y(y, index=X.index)
         self.target_name_ = y.columns[0]
-        
+
         design_matrix = self.composer_.fit_transform(X, y)
         self.n_parameters_ = design_matrix.shape[1]
         self.dof_ = np.linalg.matrix_rank(design_matrix)
