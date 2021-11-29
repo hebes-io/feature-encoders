@@ -1,4 +1,5 @@
 [![PyPI version](https://badge.fury.io/py/feature-encoders.svg)](https://badge.fury.io/py/feature-encoders)
+[![Documentation Status](https://readthedocs.org/projects/feature-encoders/badge/?version=latest)](https://feature-encoders.readthedocs.io/en/latest/?badge=latest)
 
 Feature Encoders
 ================
